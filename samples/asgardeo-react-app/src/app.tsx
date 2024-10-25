@@ -33,6 +33,7 @@ const AppContent: FunctionComponent = (): ReactElement => {
             <Router>
             <Routes>
                 <Route path="/" element={ <HomePage /> } />
+                <Route path="/login" element={ <HomePage /> } />
                 <Route element={ <NotFoundPage /> } />
             </Routes>
         </Router>
