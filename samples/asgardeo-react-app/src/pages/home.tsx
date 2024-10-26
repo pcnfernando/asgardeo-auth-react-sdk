@@ -18,13 +18,13 @@
 
 import { BasicUserInfo, Hooks, useAuthContext } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement, useCallback, useEffect, useState } from "react";
-import { default as authConfig } from "../config.json";
 import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
-import { AuthenticationResponse } from "../components";
+import { AuthenticationResponse, APIResponse } from "../components";
 import { useLocation } from "react-router-dom";
 import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
 import { USER_DENIED_LOGOUT } from "../constants/errors";
+import axios from "axios";
 
 interface DerivedState {
     authenticateResponse: BasicUserInfo,
@@ -49,6 +49,7 @@ export const HomePage: FunctionComponent = (): ReactElement => {
         getBasicUserInfo,
         getIDToken,
         getDecodedIDToken,
+        getAccessToken,
         on
     } = useAuthContext();
 
@@ -81,6 +82,27 @@ export const HomePage: FunctionComponent = (): ReactElement => {
             setDerivedAuthenticationState(derivedState);
         })();
     }, [ state.isAuthenticated , getBasicUserInfo, getIDToken, getDecodedIDToken ]);
+
+
+    const [apiResponse, setApiResponse] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+        if (state.isAuthenticated) {
+            const token = await getAccessToken();
+            try {
+            const response = await axios.get("https://apis.preview-dv.choreo.dev/user-mgt/1.0.0/validate/user", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setApiResponse(JSON.stringify(response.data, null, 2));
+            } catch (error) {
+            setApiResponse("Error fetching API data");
+            }
+        }
+        };
+
+        fetchData();
+    }, [state.isAuthenticated, getAccessToken]);
 
     useEffect(() => {
         if(stateParam && errorDescParam) {
@@ -116,21 +138,6 @@ export const HomePage: FunctionComponent = (): ReactElement => {
         signOut();
     };
 
-    // If `clientID` is not defined in `config.json`, show a UI warning.
-    // if (!authConfig?.clientID) {
-
-    //     return (
-    //         <div className="content">
-    //             <h2>You need to update the Client ID to proceed.</h2>
-    //             <p>Please open &quot;src/config.json&quot; file using an editor, and update
-    //                 the <code>clientID</code> value with the registered application&apos;s client ID.</p>
-    //             <p>Visit repo <a
-    //                 href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-app">README</a> for
-    //                 more details.</p>
-    //         </div>
-    //     );
-    // }
-
     if (hasLogoutFailureError) {
         return (
             <LogoutRequestDenied
@@ -150,9 +157,11 @@ export const HomePage: FunctionComponent = (): ReactElement => {
                 state.isAuthenticated
                     ? (
                         <div className="content">
+                            
                             <AuthenticationResponse
                                 derivedResponse={ derivedAuthenticationState }
                             />
+                            {<APIResponse apiResponse={apiResponse} />}
                             <button
                                 className="btn primary mt-4"
                                 onClick={ () => {

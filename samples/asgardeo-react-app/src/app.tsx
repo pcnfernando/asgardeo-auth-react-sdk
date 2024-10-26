@@ -21,7 +21,6 @@ import React, { FunctionComponent, ReactElement, useState, useEffect } from "rea
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./app.css";
-import { default as authConfig } from "./config.json";
 import { ErrorBoundary } from "./error-boundary";
 import { HomePage, NotFoundPage } from "./pages";
 
@@ -54,9 +53,10 @@ const App: FunctionComponent = (): ReactElement => {
     if (!authConfig) {
         return <div>Loading...</div>;
     }
-    return (<AuthProvider config={authConfig}>
-        <AppContent />
-    </AuthProvider>
+    return (
+        <AuthProvider config={authConfig}>
+            <AppContent />
+        </AuthProvider>
     )
 };
 
