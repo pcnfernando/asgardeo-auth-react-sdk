@@ -30,25 +30,6 @@ interface AuthenticationResponsePropsInterface {
     derivedResponse?: any;
 }
 
-export interface DerivedAuthenticationResponseInterface {
-    /**
-     * Response from the `getBasicUserInfo()` function from the SDK context.
-     */
-    authenticateResponse: BasicUserInfo;
-    /**
-     * ID token split by `.`.
-     */
-    idToken: string[];
-    /**
-     * Decoded Header of the ID Token.
-     */
-    decodedIdTokenHeader: Record<string, unknown>;
-    /**
-     * Decoded Payload of the ID Token.
-     */
-    decodedIDTokenPayload: Record<string, unknown>;
-}
-
 /**
  * Displays the derived Authentication Response from the SDK.
  *
