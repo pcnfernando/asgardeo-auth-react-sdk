@@ -1,6 +1,5 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { JsonViewer } from '@textea/json-viewer'
-// import ReactJson from "react18-json-view";
 
 interface APIResponsePropsInterface {
     
@@ -17,7 +16,7 @@ export const APIResponse: FunctionComponent<APIResponsePropsInterface> = (
 
     return (
         <>
-            <h2>API Response</h2>
+            <h2>Organizations</h2>
             <div className="json">
                 <JsonViewer
                     className="asg-json-viewer"
