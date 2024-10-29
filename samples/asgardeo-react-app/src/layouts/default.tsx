@@ -56,7 +56,7 @@ export const DefaultLayout: FunctionComponent<PropsWithChildren<DefaultLayoutPro
             <div className="container">
                 <div className="header-title">
                     <h1>
-                        React SPA Authentication Sample
+                        Hello Devant!
                     </h1>
                 </div>
                 {

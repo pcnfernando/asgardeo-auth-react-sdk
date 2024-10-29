@@ -65,6 +65,7 @@ export const HomePage: FunctionComponent = (): ReactElement => {
     const errorDescParam = new URLSearchParams(search).get('error_description');
 
     const [apiResponse, setApiResponse] = useState("");
+    // const [listOfOrgs, setListOfOrgs] = useState<string[]>();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -74,13 +75,16 @@ export const HomePage: FunctionComponent = (): ReactElement => {
                     const response = await axios.get("https://apis.preview-dv.choreo.dev/user-mgt/1.0.0/validate/user", {
                         headers: { Authorization: `Bearer ${token}` }
                     });
-                    const { data } = response;
-                    if (data?.organizations.length) {
-                        const { organizations } = data;
-                        const orgNames: string[] = organizations.map((org: Organization) => org.name);
-                        // setApiResponse(`${orgNames.join(", ")}`);
-                        setApiResponse(JSON.stringify(orgNames, null, 2));
-                    }
+                    setApiResponse(JSON.stringify(response.data, null, 2));
+
+                    // const { data } = response;
+                    // if (data?.organizations.length) {
+                    //     const { organizations } = data;
+                    //     const orgNames: string[] = organizations.map((org: Organization) => org.name);
+                    //     // setApiResponse(`${orgNames.join(", ")}`);
+                    //     // setApiResponse(JSON.stringify(orgNames, null, 2));
+                    //     setListOfOrgs(orgNames);
+                    // }
                 } catch (error) {
                     setApiResponse("Error fetching API data");
                 }
@@ -159,14 +163,9 @@ export const HomePage: FunctionComponent = (): ReactElement => {
                             <div className="home-image">
                                 <img alt="react-logo" src={REACT_LOGO} className="react-logo-image logo" />
                             </div>
-                            <h4 className={"spa-app-description"}>
-                                Sample demo to showcase authentication for a Single Page Application
-                                via the OpenID Connect Authorization Code flow,
-                                which is integrated using the&nbsp;
-                                <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank" rel="noreferrer noopener">
-                                    Asgardeo Auth React SDK
-                                </a>.
-                            </h4>
+                            <h3 className={"spa-app-description"}>
+                                Welcome Back
+                            </h3>
                             <button
                                 className="btn primary"
                                 onClick={() => {
