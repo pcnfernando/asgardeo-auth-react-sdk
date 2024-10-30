@@ -33,6 +33,7 @@ const AppContent: FunctionComponent = (): ReactElement => {
             <Routes>
                 <Route path="/" element={ <HomePage /> } />
                 <Route path="/login" element={ <HomePage /> } />
+                <Route path="/signin" element={ <HomePage /> } />
                 <Route element={ <NotFoundPage /> } />
             </Routes>
         </Router>
@@ -59,11 +60,5 @@ const App: FunctionComponent = (): ReactElement => {
         </AuthProvider>
     )
 };
-
-// const App = () => (
-//     <AuthProvider config={authConfig}>
-//         <AppContent />
-//     </AuthProvider>
-// );
 
 render((<App />), document.getElementById("root"));

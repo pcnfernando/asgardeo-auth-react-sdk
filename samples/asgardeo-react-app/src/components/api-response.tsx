@@ -3,21 +3,7 @@ import { JsonViewer } from '@textea/json-viewer'
 
 interface APIResponsePropsInterface {
     
-    apiResponse: any;
-}
-
-interface Organization {
-    handle: string;
-    id: number;
-    name: string;
-    uuid: string;
-    owner: User;
-}
-
-interface User {
-    id?: number;
-    idpId: string;
-    createdAt?: Date;
+    apiResponse?: any;
 }
 
 export const APIResponse: FunctionComponent<APIResponsePropsInterface> = (
@@ -34,7 +20,7 @@ export const APIResponse: FunctionComponent<APIResponsePropsInterface> = (
             <div className="json">
                 <JsonViewer
                     className="asg-json-viewer"
-                    value={ apiResponse }
+                    value={ apiResponse?.validationResponse }
                     enableClipboard={ false }
                     displayObjectSize={ false }
                     displayDataTypes={ false }
@@ -47,7 +33,7 @@ export const APIResponse: FunctionComponent<APIResponsePropsInterface> = (
             <div className="json">
                 <JsonViewer
                     className="asg-json-viewer"
-                    value={ apiResponse.data.organizations.map((org: Organization) => org.name) }
+                    value={ apiResponse?.orgs }
                     enableClipboard={ false }
                     displayObjectSize={ false }
                     displayDataTypes={ false }
