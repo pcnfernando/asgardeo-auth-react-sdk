@@ -1,10 +1,9 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { JsonViewer } from '@textea/json-viewer'
-// import ReactJson from "react18-json-view";
 
 interface APIResponsePropsInterface {
     
-    apiResponse: any;
+    apiResponse?: any;
 }
 
 export const APIResponse: FunctionComponent<APIResponsePropsInterface> = (
@@ -17,11 +16,24 @@ export const APIResponse: FunctionComponent<APIResponsePropsInterface> = (
 
     return (
         <>
-            <h2>API Response</h2>
+            <h2>Response of 'validate/user'</h2>
             <div className="json">
                 <JsonViewer
                     className="asg-json-viewer"
-                    value={ apiResponse }
+                    value={ apiResponse?.validationResponse }
+                    enableClipboard={ false }
+                    displayObjectSize={ false }
+                    displayDataTypes={ false }
+                    rootName={ false }
+                    theme="dark"
+                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}
+                />
+            </div>
+            <h2>Organizations</h2>
+            <div className="json">
+                <JsonViewer
+                    className="asg-json-viewer"
+                    value={ apiResponse?.orgs }
                     enableClipboard={ false }
                     displayObjectSize={ false }
                     displayDataTypes={ false }
